@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "description": "Backend server Rest API for the Managely project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "lint": "ts-standard"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.10",
+    "prettier": "^2.8.0",
+    "ts-node-dev": "^2.0.0",
+    "ts-standard": "^12.0.1",
+    "typescript": "^4.9.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "../node_modules/ts-standard/eslintrc.json"
+    ]
+  }
+}

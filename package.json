@@ -1,0 +1,15 @@
+{
+  "name": "managely",
+  "description": "FullStack Product management system built with React & Node.js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "server"
+  ],
+  "scripts": {
+    "dev:server": "cd server && yarn dev",
+    "lint:server": "cd server && yarn lint"
+  }
+}
