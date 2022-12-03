@@ -1,14 +1,22 @@
 import express, { Request, Response } from 'express'
+import cors from 'cors'
+
+import { morganMiddleware } from './middleware/morgan.middleware'
+
+import { routes } from '@/shared/routes'
 
 const app = express()
 
-const PORT = 3333
+// Middleware
+app.use(express.json())
+app.use(cors())
+app.use(morganMiddleware)
 
 // Start express server and healthcheck route
-app.get('/healthcheck', (req: Request, res: Response) => {
-  res.send('Server is running')
+app.get(routes.healthcheck, (req: Request, res: Response) => {
+  res.status(200).json({
+    api_status: 'OK'
+  })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+export default app
