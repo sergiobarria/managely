@@ -7,5 +7,6 @@ export const routes = {
   // users
   users: '/users',
   register: '/register',
-  login: '/login'
+  login: '/login',
+  logout: '/logout'
 }

@@ -42,7 +42,7 @@ export const createAndSendToken = (user: Document, statusCode: number, res: Resp
 /**
  * @description - Register user
  * @access - Public
- * @returns {Response} - Express response object
+ * @route - POST /api/users/register
  */
 export const registerUser = asyncHandler(
   async (req: Request<{}, {}, CreateUserInput>, res: Response, next: NextFunction) => {
@@ -69,7 +69,7 @@ export const registerUser = asyncHandler(
 /**
  * @description - Login user
  * @access - Public
- * @returns {Response} - Express response object
+ * @route - POST /api/users/login
  */
 export const loginUser = asyncHandler(
   async (req: Request<{}, {}, LoginUserSchema>, res: Response, next: NextFunction) => {
@@ -85,3 +85,17 @@ export const loginUser = asyncHandler(
     createAndSendToken(user, status.OK, res)
   }
 )
+
+/**
+ * @description - Logout user
+ * @access - Public
+ * @route - POST /api/users/logout
+ */
+export const logoutUser = asyncHandler(async (req: Request, res: Response) => {
+  res.cookie('token', 'logged out', {
+    expires: new Date(0), // now
+    httpOnly: true
+  })
+
+  res.status(status.OK).json({ status: 'success' })
+})
