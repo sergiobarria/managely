@@ -5,8 +5,8 @@ import cookieParser from 'cookie-parser'
 import { morganMiddleware } from './middleware/morgan.middleware'
 import { globalErrorHandler, notFound } from '@/middleware/error.middleware'
 
+import { apiRouter } from './router'
 import { routes } from '@/shared/constants/routes'
-import { userRouter } from '@/modules/users'
 
 const app = express()
 
@@ -17,17 +17,7 @@ app.use(cookieParser())
 app.use(morganMiddleware)
 
 // App Routes
-app.get(routes.healthcheck, (req: Request, res: Response) => {
-  res.status(200).json({
-    api_status: 'OK'
-  })
-})
-
-/*
- * Prefix: /api
- * Routes: /api/users
- */
-app.use(`${routes.prefix}${routes.users}`, userRouter)
+app.use(routes.prefix, apiRouter)
 
 // Not Found
 app.use(notFound)

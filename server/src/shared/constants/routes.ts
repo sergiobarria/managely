@@ -6,5 +6,6 @@ export const routes = {
 
   // users
   users: '/users',
-  register: '/register'
+  register: '/register',
+  login: '/login'
 }

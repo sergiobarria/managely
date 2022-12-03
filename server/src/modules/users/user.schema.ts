@@ -34,7 +34,15 @@ export const deleteUserSchema = z.object({
   })
 })
 
+export const loginUserSchema = z.object({
+  body: z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+  })
+})
+
 export type CreateUserInput = z.infer<typeof createUserSchema>['body']
 export type UpdateUserInput = z.infer<typeof updateUserSchema>
 export type GetUserSchema = z.infer<typeof getUserSchema>
 export type DeleteUserSchema = z.infer<typeof deleteUserSchema>
+export type LoginUserSchema = z.infer<typeof loginUserSchema>[`body`]

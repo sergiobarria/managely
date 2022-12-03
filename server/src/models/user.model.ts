@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-interface UserDocument extends mongoose.Document {
+interface User {
   name: string
   email: string
   password: string
@@ -10,9 +10,15 @@ interface UserDocument extends mongoose.Document {
   bio: string
 }
 
+interface UserMethods {
+  matchPassword: (enteredPassword: string, userPassword: string) => Promise<boolean>
+}
+
+type UserModel = mongoose.Model<User, {}, UserMethods>
+
 export const privateFields = ['password', '__v']
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<User, UserModel, UserMethods>(
   {
     name: {
       type: String,
@@ -63,4 +69,14 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
-export const User = mongoose.model<UserDocument>('User', userSchema)
+// Compare user entered password to hashed password in database
+userSchema.methods.matchPassword = async function (enteredPassword, userPassword) {
+  return await bcrypt.compare(enteredPassword, userPassword)
+}
+
+// Can declare the method in this way too
+// userSchema.method('matchPassword', async function (enteredPassword, userPassword) {
+//   return await bcrypt.compare(enteredPassword, userPassword)
+// })
+
+export const User = mongoose.model<User, UserModel>('User', userSchema)
